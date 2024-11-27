@@ -1,14 +1,19 @@
 # Exported from Render on 2024-11-27T13:34:29Z
 services:
-- type: web
-  name: render-deploy
-  runtime: node
-  repo: https://github.com/Gilles-knd/render-deploy
-  plan: free
-  envVars:
-  - key: DB_NAME
-    sync: false
-  region: oregon
-  buildCommand: npm i
-  startCommand: npm run start
-version: "1"
+  - type: web
+    name: render-deploy
+    runtime: node
+    repo: https://github.com/Gilles-knd/render-deploy
+    plan: free
+    envVars:
+      - key: DB_NAME
+        fromDatabase:
+            name: db_name
+            property: connectionString
+    region: oregon
+    buildCommand: npm i
+    startCommand: npm run start
+
+databases:
+  - name: db_name
+    plan: free
